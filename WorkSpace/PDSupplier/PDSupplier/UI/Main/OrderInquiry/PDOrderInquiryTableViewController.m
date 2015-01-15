@@ -61,48 +61,83 @@
     footer.backgroundColor=[UIColor colorWithRed:0.4000 green:0.4000 blue:0.4000 alpha:1.0f];
     
     UIButton *searchutton = [[UIButton alloc] initWithFrame:CGRectMake(kAppWidth-kCellLeftGap-120, kCellLeftGap/2, 120, 40)];
-    searchutton.backgroundColor=[UIColor colorWithHexString:kAppRedColor];
+    UIImage *image = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:searchutton.size];
+    [searchutton setBackgroundImage:image forState:UIControlStateNormal];
     [footer addSubview:searchutton];
     [searchutton setTitle:@"查询" forState:UIControlStateNormal];
     [searchutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [searchutton.titleLabel setFont:[UIFont systemFontOfSize:kAppBtnSize]];
     [searchutton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
-        
+        [self.tableView triggerPullToRefresh];
     }];
     searchutton.layer.cornerRadius = kBtnCornerRadius;
     searchutton.layer.masksToBounds = YES;
     searchutton.layer.borderWidth = 1;
     searchutton.layer.borderColor = [[UIColor colorWithHexString:kAppRedColor] CGColor];
     
-    UITextField *input =[[UITextField alloc] initWithFrame:CGRectMake(kCellLeftGap, kCellLeftGap/2, kAppWidth-kCellLeftGap*2.5-searchutton.width, 40)];
-    input.borderStyle=UITextBorderStyleNone;
-    input.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
-    input.placeholder=@"输入手机号后4位";
-    input.backgroundColor=[UIColor whiteColor];
-    input.delegate=self;
-    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTextFieldLeft, input.frame.size.height)];
-    input.leftView = view1;
-    input.leftViewMode = UITextFieldViewModeAlways;
-    [footer addSubview:input];
+    _input =[[UITextField alloc] initWithFrame:CGRectMake(kCellLeftGap, kCellLeftGap/2, kAppWidth-kCellLeftGap*2.5-searchutton.width, 40)];
+    _input.borderStyle=UITextBorderStyleNone;
+    _input.clearButtonMode=UITextFieldViewModeWhileEditing;
+    _input.keyboardType=UIKeyboardTypeNumbersAndPunctuation;
+    _input.placeholder=@"输入手机号后4位";
+    _input.backgroundColor=[UIColor whiteColor];
+    _input.delegate=self;
+    UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTextFieldLeft, _input.frame.size.height)];
+    _input.leftView = view1;
+    _input.leftViewMode = UITextFieldViewModeAlways;
+    [footer addSubview:_input];
 
     UIWindow *keywindow=[[UIApplication sharedApplication] keyWindow];
     [keywindow addSubview:footer];
+
+    // pull
+    _type=1;
+    _curpage=0;
+    __weak PDOrderInquiryTableViewController *weakSelf = self;
     [self.tableView addPullToRefreshWithActionHandler:^{
         //
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
-        [engine searchOrderWithKitchenid:@"d97c065066afb1632ca78c02b4b6351b" type:1 phone:@"6308" page:0 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"responseObject==%@",responseObject);
-            PDBaseModel *model = [PDBaseModel objectWithJoy:responseObject];
-            NSLog(@"model===%@",model);
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
+        [engine searchOrderWithKitchenid:kitchenid type:weakSelf.type phone:weakSelf.input.text page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.list removeAllObjects];
+            weakSelf.curpage=0;
+            NSArray *arr=(NSArray*)responseObject;
+            for (int i=0; i<arr.count; i++) {
+                PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
+                [weakSelf.list addObject:model];
+            }
             
+            [weakSelf.tableView reloadData];
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alt show];
         }];
         
         
     }];
     //
     [self.tableView addInfiniteScrollingWithActionHandler:^{
-        //
+        weakSelf.curpage++;
+        PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
+        [engine searchOrderWithKitchenid:kitchenid type:weakSelf.type phone:weakSelf.input.text page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            NSArray *arr=(NSArray*)responseObject;
+            for (int i=0; i<arr.count; i++) {
+                PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
+                [weakSelf.list addObject:model];
+            }
+            [weakSelf.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alt show];
+        }];
     }];
     
 }
@@ -131,6 +166,9 @@
     [keywindow addSubview:footer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disappearKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    if (self.list.count==0) {
+        [self.tableView triggerPullToRefresh];
+    }
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -206,9 +244,8 @@
     [AMButton setTitle:@"配送的订单" forState:UIControlStateNormal];
     [AMButton.titleLabel setFont:[UIFont systemFontOfSize:kAppFontSize]];
     [AMButton setTitleColor:[UIColor colorWithHexString:kAppNormalColor] forState:UIControlStateNormal];
-    [AMButton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
-        
-    }];
+
+    
     UIImageView *gapimg=[[UIImageView alloc] initWithFrame:CGRectMake(AMButton.right, AMButton.top+18, 1, 16)];
     gapimg.backgroundColor=[UIColor colorWithHexString:kAppLineColor];
     [header addSubview:gapimg];
@@ -218,14 +255,34 @@
     [PMButton setTitle:@"退款的订单" forState:UIControlStateNormal];
     [PMButton setTitleColor:[UIColor colorWithHexString:kAppNormalColor] forState:UIControlStateNormal];
     [PMButton.titleLabel setFont:[UIFont systemFontOfSize:kAppFontSize]];
-    [PMButton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
-        
+
+    
+    [AMButton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
+        [AMButton setTitleColor:[UIColor colorWithHexString:kAppRedColor] forState:UIControlStateNormal];
+        [PMButton setTitleColor:[UIColor colorWithHexString:kAppNormalColor] forState:UIControlStateNormal];
+        _type=1;
+        [self.tableView triggerPullToRefresh];
     }];
+    [PMButton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
+        [AMButton setTitleColor:[UIColor colorWithHexString:kAppNormalColor] forState:UIControlStateNormal];
+        [PMButton setTitleColor:[UIColor colorWithHexString:kAppRedColor] forState:UIControlStateNormal];
+        _type=2;
+        [self.tableView triggerPullToRefresh];
+    }];
+    if (_type==1) {
+        [AMButton setTitleColor:[UIColor colorWithHexString:kAppRedColor] forState:UIControlStateNormal];
+        [PMButton setTitleColor:[UIColor colorWithHexString:kAppNormalColor] forState:UIControlStateNormal];
+    }else{
+        [AMButton setTitleColor:[UIColor colorWithHexString:kAppNormalColor] forState:UIControlStateNormal];
+        [PMButton setTitleColor:[UIColor colorWithHexString:kAppRedColor] forState:UIControlStateNormal];
+    }
     
     return header;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [PDOrderCell cellHeightWithData:nil];
+    PDOrderModel *order=[_list objectAtIndex:indexPath.row];
+    order.type=OrderTypeNormal;
+    return [PDOrderCell cellHeightWithData:order];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -234,7 +291,10 @@
     if (!cell) {
         cell = [[PDOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellstring];
     }
-    [cell setData:nil];
+    PDOrderModel *order=[_list objectAtIndex:indexPath.row];
+    order.index=indexPath.row;
+    order.type=OrderTypeNormal;
+    [cell setData:order];
     cell.delegate = self;
     return cell;
 }

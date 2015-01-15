@@ -54,6 +54,7 @@
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
         [engine getTodayOrderWithKitchenid:kitchenid type:weakSelf.type page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.list removeAllObjects];
             weakSelf.curpage=0;
             NSArray *arr=(NSArray*)responseObject;
@@ -61,9 +62,10 @@
                 PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
                 [weakSelf.list addObject:model];
             }
-            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            
             [weakSelf.tableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
             UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alt show];
         }];
@@ -77,14 +79,16 @@
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
         [engine getTodayOrderWithKitchenid:kitchenid type:weakSelf.type page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
             NSArray *arr=(NSArray*)responseObject;
             for (int i=0; i<arr.count; i++) {
                 PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
                 [weakSelf.list addObject:model];
             }
             [weakSelf.tableView reloadData];
-            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
             UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alt show];
         }];

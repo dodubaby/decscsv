@@ -11,6 +11,7 @@
 #import "NSDate+convenience.h"
 #import "NSMutableArray+convenience.h"
 #import "UIView+convenience.h"
+#import "PDUtils.h"
 
 @interface VRGCalendarView ()
 
@@ -523,7 +524,7 @@
         if (selectedDate && i==selectedDateBlock) {
             CGRect rectangleGrid = CGRectMake(targetX,targetY,kVRGCalendarViewDayWidth+2,kVRGCalendarViewDayHeight+2);
             CGContextAddRect(context, rectangleGrid);
-            CGContextSetFillColorWithColor(context, [UIColor colorWithHexString:@"0x6070a0"].CGColor);
+            CGContextSetFillColorWithColor(context, [UIColor colorWithHexString:kAppRedColor].CGColor);
             CGContextFillPath(context);
             
             CGContextSetFillColorWithColor(context,
@@ -623,7 +624,7 @@
         NSString *date = [NSString stringWithFormat:@"%i",targetDate];
         
         
-        [date drawInRect:CGRectMake(targetX, targetY+12, kVRGCalendarViewDayWidth, kVRGCalendarViewDayHeight) withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:17] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        [date drawInRect:CGRectMake(targetX, targetY+12, kVRGCalendarViewDayWidth, kVRGCalendarViewDayHeight) withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:15] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
     }
     
     

@@ -172,6 +172,8 @@
         receivebtn.hidden=YES;
         finishbtn.hidden=YES;
         cancelbtn.hidden=YES;
+        newmarkimg.hidden=YES;
+        bgborderimg.frame=CGRectMake(kCellLeftGap, 11, kAppWidth-kCellLeftGap*2, 212+kCellLeftGap);
     }
     if ([data.is_eat integerValue]==1) {
         receivebtn.userInteractionEnabled=NO;
@@ -202,7 +204,7 @@
     if (data.type==OrderTypeToday) {
         return 272+kCellLeftGap*3;
     }else{
-        return 232+kCellLeftGap;
+        return 222+kCellLeftGap*2;
     }
 }
 

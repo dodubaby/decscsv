@@ -14,7 +14,6 @@
 
 @interface PDAllOrderTableViewController ()<UITabBarControllerDelegate,VRGCalendarViewDelegate>
 {
-    NSMutableArray *list;
     UIControl *_iPCalendarControl;
     UIView *footer;
 }
@@ -25,9 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    list=[[NSMutableArray alloc] init];
-    [list addObject:[[PDOrderModel alloc] init]];
-    [list addObject:[[PDOrderModel alloc] init]];
+    _list=[[NSMutableArray alloc] init];
     
     UIImageView *img=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Back"]];
     img.userInteractionEnabled=YES;
@@ -49,7 +46,8 @@
     UIWindow *keywindow=[[UIApplication sharedApplication] keyWindow];
     
     UIButton *calendarutton = [[UIButton alloc] initWithFrame:CGRectMake(kCellLeftGap, kCellLeftGap/2, kAppWidth-2*kCellLeftGap, 40)];
-    calendarutton.backgroundColor=[UIColor colorWithHexString:kAppRedColor];
+    UIImage *image = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:calendarutton.size];
+    [calendarutton setBackgroundImage:image forState:UIControlStateNormal];
     [footer addSubview:calendarutton];
     [calendarutton setTitle:@"日历" forState:UIControlStateNormal];
     [calendarutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -78,22 +76,52 @@
     
     [keywindow addSubview:footer];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
+
+    _curpage=0;
+    __weak PDAllOrderTableViewController *weakSelf = self;
     [self.tableView addPullToRefreshWithActionHandler:^{
         //
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
-        [engine allOrderWithKitchenid:@"d97c065066afb1632ca78c02b4b6351b" start_date:@"2015-01-09" end_date:@"2015-01-10" page:0 success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSLog(@"responseObject==%@",responseObject);
-            PDBaseModel *model = [PDBaseModel objectWithJoy:responseObject];
-            NSLog(@"model===%@",model);
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
+        [engine allOrderWithKitchenid:kitchenid start_date:@"2015-01-09" end_date:@"2015-01-10" page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            [weakSelf.list removeAllObjects];
+            weakSelf.curpage=0;
+            NSArray *arr=(NSArray*)responseObject;
+            for (int i=0; i<arr.count; i++) {
+                PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
+                [weakSelf.list addObject:model];
+            }
+            [weakSelf.tableView reloadData];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
+            [weakSelf.tableView.pullToRefreshView stopAnimating];
+            UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alt show];
         }];
         
         
     }];
     //
     [self.tableView addInfiniteScrollingWithActionHandler:^{
-        //
+        weakSelf.curpage++;
+        PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
+        [engine allOrderWithKitchenid:kitchenid start_date:weakSelf.start_date end_date:weakSelf.end_date page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            NSArray *arr=(NSArray*)responseObject;
+            for (int i=0; i<arr.count; i++) {
+                PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
+                [weakSelf.list addObject:model];
+            }
+            [weakSelf.tableView reloadData];
+            
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
+            UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alt show];
+        }];
     }];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -101,6 +129,9 @@
     [super viewWillAppear:animated];
     UIWindow *keywindow=[[UIApplication sharedApplication] keyWindow];
     [keywindow addSubview:footer];
+    if (self.list.count==0) {
+        [self.tableView triggerPullToRefresh];
+    }
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -122,7 +153,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return list.count;
+    return _list.count;
 }
 /*-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -189,25 +220,37 @@
 -(void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date
 {
     NSLog(@"date==%@",date);
+    NSDateFormatter* fmt = [[NSDateFormatter alloc] init];
+    //fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    fmt.dateFormat = @"yyyy-MM-dd";
+    NSString* dateString = [fmt stringFromDate:date];
+    self.start_date=dateString;
+    self.end_date=dateString;
+    [self.tableView triggerPullToRefresh];
 }
 -(void)dismissCalandar:(id)sender
 {
     [_iPCalendarControl removeFromSuperview];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [PDOrderCell cellHeightWithData:nil];
+    PDOrderModel *order=[_list objectAtIndex:indexPath.row];
+    order.type=OrderTypeNormal;
+    return [PDOrderCell cellHeightWithData:order];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellstring=@"inOrdercellID";
+    static NSString *cellstring=@"allOrdercellID";
     PDOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:cellstring];
     if (!cell) {
         cell = [[PDOrderCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellstring];
     }
-    [cell setData:nil];
+    PDOrderModel *order=[_list objectAtIndex:indexPath.row];
+    order.index=indexPath.row;
+    order.type=OrderTypeNormal;
+    [cell setData:order];
+    cell.delegate = self;
     return cell;
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
