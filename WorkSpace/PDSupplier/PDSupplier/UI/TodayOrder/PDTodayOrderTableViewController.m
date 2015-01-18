@@ -200,8 +200,11 @@
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
     [engine confirmOrderWithKitchenid:kitchenid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
-        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alt show];
+//        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alt show];
+        order.is_confirm=@"1";
+        NSIndexPath *indexpath=[self.tableView indexPathForCell:cell];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];
@@ -217,8 +220,12 @@
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
     [engine finishOrderWithKitchenid:kitchenid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
-        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alt show];
+//        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alt show];
+        order.is_finish=@"1";
+        [self.list removeObject:order];
+        NSIndexPath *indexpath=[self.tableView indexPathForCell:cell];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationBottom];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];
@@ -233,8 +240,9 @@
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
     [engine refundOrderWithKitchenid:kitchenid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
-        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alt show];
+        order.is_refund=@"1";
+        NSIndexPath *indexpath=[self.tableView indexPathForCell:cell];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationFade];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];

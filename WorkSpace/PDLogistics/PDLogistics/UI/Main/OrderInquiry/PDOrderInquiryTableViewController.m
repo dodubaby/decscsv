@@ -281,7 +281,11 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     PDOrderModel *order=[_list objectAtIndex:indexPath.row];
-    order.type=OrderTypeToday;
+    if (self.type==1) {
+        order.type=OrderTypeToday;
+    }else{
+        order.type=OrderTypeNormal;
+    }
     return [PDOrderCell cellHeightWithData:order];
 }
 
@@ -293,7 +297,11 @@
     }
     PDOrderModel *order=[_list objectAtIndex:indexPath.row];
     order.index=indexPath.row;
-    order.type=OrderTypeToday;
+    if (self.type==1) {
+        order.type=OrderTypeToday;
+    }else{
+        order.type=OrderTypeNormal;
+    }
     [cell setData:order];
     cell.delegate = self;
     return cell;

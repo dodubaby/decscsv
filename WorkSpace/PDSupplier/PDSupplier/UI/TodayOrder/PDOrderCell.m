@@ -98,13 +98,14 @@
                 [self.delegate pdBaseTableViewCellDelegate:self confirmOrderWithData:self.data];
             }
         }];
-        receivebtn.backgroundColor=[UIColor colorWithHexString:kAppRedColor];
         receivebtn.titleLabel.font=[UIFont systemFontOfSize:kAppBtnSize];
         [receivebtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         receivebtn.layer.cornerRadius = kBtnCornerRadius;
         receivebtn.layer.masksToBounds = YES;
         UIImage *image = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:receivebtn.size];
         [receivebtn setBackgroundImage:image forState:UIControlStateNormal];
+        UIImage *selectedimage = [UIImage imageWithColor:[UIColor colorWithHexString:kAppTitleColor] size:receivebtn.size];
+        [receivebtn setBackgroundImage:selectedimage forState:UIControlStateSelected];
         [self addSubview:receivebtn];
         
         finishbtn = [[UIButton alloc] initWithFrame:CGRectMake(receivebtn.right+kCellLeftGap, totallab.bottom+kCellLeftGap, (kAppWidth-8*kCellLeftGap)/3, 40)];
@@ -115,7 +116,6 @@
                 [self.delegate pdBaseTableViewCellDelegate:self finishOrderWithData:self.data];
             }
         }];
-        finishbtn.backgroundColor=[UIColor colorWithHexString:kAppRedColor];
         finishbtn.titleLabel.font=[UIFont systemFontOfSize:kAppBtnSize];
         [finishbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         finishbtn.layer.cornerRadius = kBtnCornerRadius;
@@ -132,13 +132,14 @@
                 [self.delegate pdBaseTableViewCellDelegate:self refundOrderWithData:self.data];
             }
         }];
-        cancelbtn.backgroundColor=[UIColor colorWithHexString:kAppRedColor];
         cancelbtn.titleLabel.font=[UIFont systemFontOfSize:kAppBtnSize];
         [cancelbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         cancelbtn.layer.cornerRadius = kBtnCornerRadius;
         cancelbtn.layer.masksToBounds = YES;
         UIImage *image2 = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:cancelbtn.size];
         [cancelbtn setBackgroundImage:image2 forState:UIControlStateNormal];
+        UIImage *selectedimage2 = [UIImage imageWithColor:[UIColor colorWithHexString:kAppTitleColor] size:cancelbtn.size];
+        [cancelbtn setBackgroundImage:selectedimage2 forState:UIControlStateSelected];
         [self addSubview:cancelbtn];
         
         bgborderimg=[[UIImageView alloc] initWithFrame:CGRectMake(kCellLeftGap, 11, kAppWidth-kCellLeftGap*2, cancelbtn.bottom+kCellLeftGap)];
@@ -175,26 +176,31 @@
         newmarkimg.hidden=YES;
         bgborderimg.frame=CGRectMake(kCellLeftGap, 11, kAppWidth-kCellLeftGap*2, 212+kCellLeftGap);
     }
-    if ([data.is_eat integerValue]==1) {
+    if ([data.is_confirm integerValue]==1) {
         receivebtn.userInteractionEnabled=NO;
         [receivebtn setTitle:@"已接单" forState:UIControlStateNormal];
+        receivebtn.selected=YES;
     }else{
         receivebtn.userInteractionEnabled=YES;
+        receivebtn.selected=NO;
         [receivebtn setTitle:@"接单" forState:UIControlStateNormal];
+        
     }
     if([data.is_finish integerValue]==1){
-        finishbtn.userInteractionEnabled=NO;
-        [finishbtn setTitle:@"已完成" forState:UIControlStateNormal];
+        finishbtn.hidden=YES;
     }else{
         finishbtn.userInteractionEnabled=YES;
+        finishbtn.hidden=NO;
         [finishbtn setTitle:@"完成" forState:UIControlStateNormal];
     }
-    if([data.is_confirm integerValue]==1){
+    if([data.is_refund integerValue]==1){
+        [cancelbtn setTitle:@"已退单" forState:UIControlStateNormal];
         cancelbtn.userInteractionEnabled=NO;
-        [cancelbtn setTitle:@"确认退单" forState:UIControlStateNormal];
+        cancelbtn.selected=YES;
     }else{
         cancelbtn.userInteractionEnabled=YES;
-        [cancelbtn setTitle:@"已退单" forState:UIControlStateNormal];
+        cancelbtn.selected=NO;
+        [cancelbtn setTitle:@"确认退单" forState:UIControlStateNormal];
     }
     //[self showDebugRect];
 }

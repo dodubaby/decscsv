@@ -167,6 +167,7 @@
     if (data.type==OrderTypeToday) {
         startsendbtn.hidden=NO;
         finishsendbtn.hidden=NO;
+        bgborderimg.frame=CGRectMake(kCellLeftGap, 11, kAppWidth-kCellLeftGap*2, finishsendbtn.bottom+kCellLeftGap);
     }else{
         startsendbtn.hidden=YES;
         finishsendbtn.hidden=YES;

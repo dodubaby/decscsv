@@ -16,6 +16,13 @@
 {
     UIControl *_iPCalendarControl;
     UIView *footer;
+    
+    BOOL isshowcalendar;
+    VRGCalendarView *curcalendar;
+    UIButton *calendarutton;
+    UIButton *cancelbutton;
+    UIButton *conformbutton;
+    
 }
 @end
 
@@ -45,22 +52,77 @@
     footer.backgroundColor=[UIColor colorWithRed:0.4000 green:0.4000 blue:0.4000 alpha:1.0f];
     UIWindow *keywindow=[[UIApplication sharedApplication] keyWindow];
     
-    UIButton *calendarutton = [[UIButton alloc] initWithFrame:CGRectMake(kCellLeftGap, kCellLeftGap/2, kAppWidth-2*kCellLeftGap, 40)];
+    isshowcalendar=NO;
+    
+    cancelbutton = [[UIButton alloc] initWithFrame:CGRectMake(kCellLeftGap, kCellLeftGap/2, (kAppWidth-3*kCellLeftGap)/2, 40)];
+    UIImage *caimage = [UIImage imageWithColor:[UIColor colorWithHexString:kAppTitleColor] size:cancelbutton.size];
+    [cancelbutton setBackgroundImage:caimage forState:UIControlStateNormal];
+    [cancelbutton setTitle:@"取消" forState:UIControlStateNormal];
+    [cancelbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelbutton.titleLabel setFont:[UIFont systemFontOfSize:kAppBtnSize]];
+    [cancelbutton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
+        isshowcalendar=NO;
+        cancelbutton.hidden=!isshowcalendar;
+        conformbutton.hidden=!isshowcalendar;
+        calendarutton.hidden=isshowcalendar;
+        
+        [_iPCalendarControl removeFromSuperview];
+        NSDateFormatter* fmt = [[NSDateFormatter alloc] init];
+        //fmt.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+        fmt.dateFormat = @"yyyy-MM-dd";
+        NSString* dateString = [fmt stringFromDate:curcalendar.selectedDate];
+        self.start_date=dateString;
+        self.end_date=dateString;
+        [self.tableView triggerPullToRefresh];
+        
+    }];
+    cancelbutton.layer.cornerRadius = kBtnCornerRadius;
+    cancelbutton.layer.masksToBounds = YES;
+    cancelbutton.layer.borderWidth = 1;
+    cancelbutton.layer.borderColor = [[UIColor colorWithHexString:kAppTitleColor] CGColor];
+    [footer addSubview:cancelbutton];
+    
+    
+    conformbutton = [[UIButton alloc] initWithFrame:CGRectMake(cancelbutton.right+kCellLeftGap, kCellLeftGap/2, (kAppWidth-3*kCellLeftGap)/2, 40)];
+    UIImage *cimage = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:conformbutton.size];
+    [conformbutton setBackgroundImage:cimage forState:UIControlStateNormal];
+    [conformbutton setTitle:@"确认" forState:UIControlStateNormal];
+    [conformbutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [conformbutton.titleLabel setFont:[UIFont systemFontOfSize:kAppBtnSize]];
+    [conformbutton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
+        isshowcalendar=NO;
+        cancelbutton.hidden=!isshowcalendar;
+        conformbutton.hidden=!isshowcalendar;
+        calendarutton.hidden=isshowcalendar;
+        [_iPCalendarControl removeFromSuperview];
+    }];
+    conformbutton.layer.cornerRadius = kBtnCornerRadius;
+    conformbutton.layer.masksToBounds = YES;
+    conformbutton.layer.borderWidth = 1;
+    conformbutton.layer.borderColor = [[UIColor colorWithHexString:kAppRedColor] CGColor];
+    [footer addSubview:conformbutton];
+    
+    
+    calendarutton = [[UIButton alloc] initWithFrame:CGRectMake(kCellLeftGap, kCellLeftGap/2, kAppWidth-2*kCellLeftGap, 40)];
     UIImage *image = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:calendarutton.size];
     [calendarutton setBackgroundImage:image forState:UIControlStateNormal];
-    [footer addSubview:calendarutton];
     [calendarutton setTitle:@"日历" forState:UIControlStateNormal];
     [calendarutton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [calendarutton.titleLabel setFont:[UIFont systemFontOfSize:kAppBtnSize]];
     [calendarutton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
+        isshowcalendar=!isshowcalendar;
+        cancelbutton.hidden=!isshowcalendar;
+        conformbutton.hidden=!isshowcalendar;
+        calendarutton.hidden=isshowcalendar;
+        
         if (!_iPCalendarControl) {
-            _iPCalendarControl =[[UIControl alloc] initWithFrame:(CGRect){0,0,kAppWidth,kAppHeight}];
+            _iPCalendarControl =[[UIControl alloc] initWithFrame:(CGRect){0,0,kAppWidth,kAppHeight-40}];
             _iPCalendarControl.backgroundColor=[UIColor clearColor];
             NSLog(@"_iPCalendarControl.frame=%@",NSStringFromCGRect(_iPCalendarControl.frame));
-            VRGCalendarView *calendar =  [[VRGCalendarView alloc] initWithFrame:CGRectMake(0, kAppHeight-318, kAppWidth, 318)];
-            calendar.tag =100;
-            calendar.delegate =self;
-            [_iPCalendarControl addSubview:calendar];
+            curcalendar =  [[VRGCalendarView alloc] initWithFrame:CGRectMake(0, kAppHeight-321, kAppWidth, 318)];
+            curcalendar.tag =100;
+            curcalendar.delegate =self;
+            [_iPCalendarControl addSubview:curcalendar];
             [_iPCalendarControl addTarget:self action:@selector(dismissCalandar:) forControlEvents:UIControlEventTouchUpInside];
         }
         if (!_iPCalendarControl.superview) {
@@ -72,9 +134,9 @@
     calendarutton.layer.masksToBounds = YES;
     calendarutton.layer.borderWidth = 1;
     calendarutton.layer.borderColor = [[UIColor colorWithHexString:kAppRedColor] CGColor];
-    
-    
+    [footer addSubview:calendarutton];
     [keywindow addSubview:footer];
+    
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
 
     _curpage=0;
@@ -231,6 +293,10 @@
 -(void)dismissCalandar:(id)sender
 {
     [_iPCalendarControl removeFromSuperview];
+    isshowcalendar=NO;
+    cancelbutton.hidden=!isshowcalendar;
+    conformbutton.hidden=!isshowcalendar;
+    calendarutton.hidden=isshowcalendar;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     PDOrderModel *order=[_list objectAtIndex:indexPath.row];

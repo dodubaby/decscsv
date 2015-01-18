@@ -21,9 +21,11 @@ typedef NS_ENUM(NSUInteger, OrderType) {
 @property(nonatomic,copy) NSString *food_name;
 @property(nonatomic,copy) NSString *food_num;
 @property(nonatomic,copy) NSString *food_price;
+
 @property(nonatomic,copy) NSString *is_confirm;
-@property(nonatomic,copy) NSString *is_eat;
 @property(nonatomic,copy) NSString *is_finish;
+@property(nonatomic,copy) NSString *is_refund;
+
 @property(nonatomic,copy) NSString *message;
 @property(nonatomic,copy) NSString *order_id;
 @property(nonatomic,copy) NSString *phone;
