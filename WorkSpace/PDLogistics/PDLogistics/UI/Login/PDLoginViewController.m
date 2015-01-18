@@ -93,8 +93,8 @@
             [engine  loginWithphone:usernametfd.text password:passwordtfd.text success:^(AFHTTPRequestOperation *operation, id responseObject) {
                 NSLog(@"responseObject==%@",responseObject);
                 NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-                [defaults setObject:[responseObject objectForKey:@"kitchenid"] forKey:@"kitchenid"];
-                [defaults setObject:[responseObject objectForKey:@"today_order"] forKey:@"today_order"];
+                [defaults setObject:[responseObject objectForKey:@"courierid"] forKey:@"courierid"];
+                //[defaults setObject:[responseObject objectForKey:@"today_order"] forKey:@"today_order"];
                 [defaults synchronize];
                 AppDelegate *app=[[UIApplication sharedApplication] delegate];
                 [app changetoMainViewController];

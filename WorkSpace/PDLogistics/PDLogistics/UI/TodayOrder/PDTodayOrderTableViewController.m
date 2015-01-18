@@ -52,8 +52,8 @@
         
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
-        [engine getTodayOrderWithKitchenid:kitchenid type:weakSelf.type page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *courierid=[defaults objectForKey:@"courierid"];
+        [engine getTodayOrderWithcourierid:courierid type:weakSelf.type page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.list removeAllObjects];
             weakSelf.curpage=0;
@@ -77,8 +77,8 @@
         weakSelf.curpage++;
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
-        [engine getTodayOrderWithKitchenid:kitchenid type:weakSelf.type page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *courierid=[defaults objectForKey:@"courierid"];
+        [engine getTodayOrderWithcourierid:courierid type:weakSelf.type page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             NSArray *arr=(NSArray*)responseObject;
             for (int i=0; i<arr.count; i++) {
@@ -195,10 +195,10 @@
 -(void)pdBaseTableViewCellDelegate:(PDBaseTableViewCell *)cell confirmOrderWithData:(id)data
 {
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
+    NSString *courierid=[defaults objectForKey:@"courierid"];
     PDOrderModel *order=(PDOrderModel*)data;
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
-    [engine confirmOrderWithKitchenid:kitchenid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [engine confirmOrderWithcourierid:courierid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];
@@ -212,10 +212,10 @@
 -(void)pdBaseTableViewCellDelegate:(PDBaseTableViewCell *)cell finishOrderWithData:(id)data
 {
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
+    NSString *courierid=[defaults objectForKey:@"courierid"];
     PDOrderModel *order=(PDOrderModel*)data;
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
-    [engine finishOrderWithKitchenid:kitchenid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [engine finishOrderWithcourierid:courierid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];
@@ -228,10 +228,10 @@
 -(void)pdBaseTableViewCellDelegate:(PDBaseTableViewCell *)cell refundOrderWithData:(id)data
 {
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
+    NSString *courierid=[defaults objectForKey:@"courierid"];
     PDOrderModel *order=(PDOrderModel*)data;
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
-    [engine refundOrderWithKitchenid:kitchenid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [engine refundOrderWithcourierid:courierid orderid:[order.order_id integerValue] success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];

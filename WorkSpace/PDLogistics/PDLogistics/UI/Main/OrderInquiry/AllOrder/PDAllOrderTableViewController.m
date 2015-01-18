@@ -83,8 +83,8 @@
         //
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
-        [engine allOrderWithKitchenid:kitchenid start_date:weakSelf.start_date end_date:weakSelf.end_date page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *courierid=[defaults objectForKey:@"courierid"];
+        [engine allOrderWithcourierid:courierid start_date:weakSelf.start_date end_date:weakSelf.end_date page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.list removeAllObjects];
             weakSelf.curpage=0;
@@ -107,8 +107,8 @@
         weakSelf.curpage++;
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-        NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
-        [engine allOrderWithKitchenid:kitchenid start_date:weakSelf.start_date end_date:weakSelf.end_date page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSString *courierid=[defaults objectForKey:@"courierid"];
+        [engine allOrderWithcourierid:courierid start_date:weakSelf.start_date end_date:weakSelf.end_date page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             NSArray *arr=(NSArray*)responseObject;
             for (int i=0; i<arr.count; i++) {

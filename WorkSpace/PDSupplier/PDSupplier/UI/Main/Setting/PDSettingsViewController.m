@@ -137,7 +137,7 @@
 }
 -(void)configData{
     NSString *versionstr = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    version.text = [NSString stringWithFormat:@"庖丁美食 %@",versionstr];
+    version.text = [NSString stringWithFormat:@"庖丁美食 V(%@)",versionstr];
     [phone setTitle:[NSString stringWithFormat:@"客服电话：%@", kPDPhoneNumber]
            forState:UIControlStateNormal];
     

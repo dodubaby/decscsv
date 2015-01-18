@@ -16,23 +16,25 @@
 
 // API path
 // 登录
-#define kPathOfLogin @"kitchen/login"
+#define klogicPathOfLogin @"logistics/login"
 //发送验证码
-#define kPathOfSendverification @"kitchen/sendverification"
+#define klogicPathOfSendverification @"logistics/sendverification"
 //注册或者找回密码
-#define kPathOfRegister @"kitchen/register"
+#define klogicPathOfRegister @"logistics/register"
 //今日订单
-#define kPathOfToday @"kitchenorder/today"
+//#define kPathOfToday @"kitchenorder/today"
 //确认订单
-#define kPathOfConfirm @"kitchenorder/confirm"
+//#define kPathOfConfirm @"kitchenorder/confirm"
 //完成订单
-#define kPathOfFinish @"kitchenorder/finish"
-//确认退款
-#define kPathOfRefund @"kitchenorder/refund"
+//#define kPathOfFinish @"kitchenorder/finish"
+
+//修改订单状态
+#define klogicPathOfStatus @"logistics/status"
+
 //订单查询
-#define kPathOfSearch @"kitchenorder/search"
+#define klogicPathOfSearch @"logistics/search"
 //全部订单
-#define kPathOfAll @"kitchenorder/all"
+#define klogicPathOfAll @"logistics/all"
 
 
 @interface PDHTTPEngine : NSObject
@@ -84,13 +86,13 @@
 /**
  *  今日订单
  *
- *  @param kitchenid 餐厅唯一标识符
+ *  @param courierid 餐厅唯一标识符
  *  @param type      上下午订单；1，上午、2，下午
  *  @param page      分页，从0开始；可以不填，默认为0；
  *  @param success
  *  @param failure
  */
--(void)getTodayOrderWithKitchenid:(NSString*)kitchenid
+-(void)getTodayOrderWithcourierid:(NSString*)courierid
                              type:(NSInteger)type
                              page:(NSInteger)page
                           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -98,24 +100,24 @@
 /**
  *  确认订单
  *
- *  @param kitchenid 餐厅id
+ *  @param courierid 餐厅id
  *  @param orderid   订单id
  *  @param success
  *  @param failure
  */
--(void)confirmOrderWithKitchenid:(NSString*)kitchenid
+-(void)confirmOrderWithcourierid:(NSString*)courierid
                          orderid:(NSInteger)orderid
                          success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                          failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 /**
  *  完成订单
  *
- *  @param kitchenid 餐厅id
+ *  @param courierid 餐厅id
  *  @param orderid   订单id
  *  @param success
  *  @param failure
  */
--(void)finishOrderWithKitchenid:(NSString*)kitchenid
+-(void)finishOrderWithcourierid:(NSString*)courierid
                         orderid:(NSInteger)orderid
                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
@@ -123,26 +125,26 @@
 /**
  *  取消订单
  *
- *  @param kitchenid 餐厅id
+ *  @param courierid 餐厅id
  *  @param orderid   订单id
  *  @param success
  *  @param failure
  */
--(void)refundOrderWithKitchenid:(NSString*)kitchenid
+-(void)refundOrderWithcourierid:(NSString*)courierid
                         orderid:(NSInteger)orderid
                         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 /**
  * 搜索订单
  *
- *  @param kitchenid 餐厅id
+ *  @param courierid 餐厅id
  *  @param type      1，配送的订单、2，退款的订单; 默认为1（配送订单）
  *  @param phone     手机号码，后4位即可，也可输入全部手机号码。
  *  @param page      分页
  *  @param success
  *  @param failure
  */
--(void)searchOrderWithKitchenid:(NSString*)kitchenid
+-(void)searchOrderWithcourierid:(NSString*)courierid
                            type:(NSInteger)type
                           phone:(NSString*)phone
                            page:(NSInteger)page
@@ -151,22 +153,33 @@
 /**
  *  所有订单
  *
- *  @param kitchenid  餐厅id
+ *  @param courierid  餐厅id
  *  @param start_date 起始时间
  *  @param end_date   结束时间
  *  @param page       分页
  *  @param success
  *  @param failure
  */
--(void)allOrderWithKitchenid:(NSString*)kitchenid
+-(void)allOrderWithcourierid:(NSString*)courierid
                   start_date:(NSString*)start_date
                     end_date:(NSString*)end_date
                         page:(NSInteger)page
                      success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                      failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-
-
-
+/**
+ *  3.2.6	配送/配送完成订单
+ *
+ *  @param courierid 快递员唯一标识符
+ *  @param order_id  订单ID
+ *  @param type      配送类型；1，配送、2，完成配送
+ *  @param success
+ *  @param failure
+ */
+-(void)changeOrderStatusWithcourierid:(NSString*)courierid
+                  order_id:(NSInteger)order_id
+                    type:(NSInteger)type
+                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 @end

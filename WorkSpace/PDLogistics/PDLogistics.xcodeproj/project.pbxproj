@@ -576,9 +576,9 @@
 		6D46EEFA1A6B7624004DBD7E /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				6D46EEFB1A6B7624004DBD7E /* FindPassword */,
 				6D46EEFE1A6B7624004DBD7E /* PDLoginViewController.h */,
 				6D46EEFF1A6B7624004DBD7E /* PDLoginViewController.m */,
+				6D46EEFB1A6B7624004DBD7E /* FindPassword */,
 				6D46EF001A6B7624004DBD7E /* Register */,
 			);
 			path = Login;
@@ -605,9 +605,9 @@
 		6D46EF031A6B7624004DBD7E /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				6D46EF041A6B7624004DBD7E /* OrderInquiry */,
 				6D46EF0A1A6B7624004DBD7E /* PDMainViewController.h */,
 				6D46EF0B1A6B7624004DBD7E /* PDMainViewController.m */,
+				6D46EF041A6B7624004DBD7E /* OrderInquiry */,
 				6D46EF0C1A6B7624004DBD7E /* Setting */,
 			);
 			path = Main;
@@ -616,9 +616,9 @@
 		6D46EF041A6B7624004DBD7E /* OrderInquiry */ = {
 			isa = PBXGroup;
 			children = (
-				6D46EF051A6B7624004DBD7E /* AllOrder */,
 				6D46EF081A6B7624004DBD7E /* PDOrderInquiryTableViewController.h */,
 				6D46EF091A6B7624004DBD7E /* PDOrderInquiryTableViewController.m */,
+				6D46EF051A6B7624004DBD7E /* AllOrder */,
 			);
 			path = OrderInquiry;
 			sourceTree = "<group>";
