@@ -84,7 +84,7 @@
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
-        [engine allOrderWithKitchenid:kitchenid start_date:@"2015-01-09" end_date:@"2015-01-10" page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [engine allOrderWithKitchenid:kitchenid start_date:weakSelf.start_date end_date:weakSelf.start_date page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.list removeAllObjects];
             weakSelf.curpage=0;
