@@ -45,11 +45,10 @@
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     // pull
     _type=1;
-    _curpage=0;
     __weak PDTodayOrderTableViewController *weakSelf = self;
     [self.tableView addPullToRefreshWithActionHandler:^{
         //
-        
+        weakSelf.curpage=0;
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString *courierid=[defaults objectForKey:@"courierid"];

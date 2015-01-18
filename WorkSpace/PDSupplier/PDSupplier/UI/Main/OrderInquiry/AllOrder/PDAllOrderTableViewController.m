@@ -135,10 +135,10 @@
     [keywindow addSubview:footer];
     self.tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
 
-    _curpage=0;
     __weak PDAllOrderTableViewController *weakSelf = self;
     [self.tableView addPullToRefreshWithActionHandler:^{
         //
+        weakSelf.curpage=0;
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString *kitchenid=[defaults objectForKey:@"kitchenid"];

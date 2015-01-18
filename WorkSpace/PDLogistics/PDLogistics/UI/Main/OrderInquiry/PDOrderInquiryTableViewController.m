@@ -69,6 +69,7 @@
     [searchutton.titleLabel setFont:[UIFont systemFontOfSize:kAppBtnSize]];
     [searchutton handleControlEvents:UIControlEventTouchUpInside actionBlock:^(id sender) {
         [self.tableView triggerPullToRefresh];
+        [_input resignFirstResponder];
     }];
     searchutton.layer.cornerRadius = kBtnCornerRadius;
     searchutton.layer.masksToBounds = YES;
@@ -92,10 +93,10 @@
 
     // pull
     _type=1;
-    _curpage=0;
     __weak PDOrderInquiryTableViewController *weakSelf = self;
     [self.tableView addPullToRefreshWithActionHandler:^{
         //
+        weakSelf.curpage=0;
         PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString *courierid=[defaults objectForKey:@"courierid"];
