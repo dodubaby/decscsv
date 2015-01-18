@@ -14,5 +14,7 @@
 #import "UIViewController+MMDrawerController.h"
 
 @interface PDBaseTableViewController : UITableViewController
+-(void)showDefaultView;
+-(void)hiddenDefaultView;
 
 @end

@@ -15,4 +15,7 @@
 
 @interface PDBaseTableViewController : UITableViewController
 
+-(void)showDefaultView;
+-(void)hiddenDefaultView;
+
 @end

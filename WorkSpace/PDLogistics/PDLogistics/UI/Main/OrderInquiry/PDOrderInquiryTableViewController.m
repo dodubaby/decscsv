@@ -103,7 +103,6 @@
         [engine searchOrderWithcourierid:courierid type:weakSelf.type phone:weakSelf.input.text page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             [weakSelf.list removeAllObjects];
-            weakSelf.curpage=0;
             NSArray *arr=(NSArray*)responseObject;
             for (int i=0; i<arr.count; i++) {
                 PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
@@ -228,6 +227,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
+    if (_list.count==0) {
+        [self showDefaultView];
+    }else{
+        [self hiddenDefaultView];
+    }
     return _list.count;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

@@ -282,7 +282,9 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
     [parameters setObject:courierid forKey:@"courierid"];
     [parameters setObject:[NSNumber numberWithInteger:type] forKey:@"type"];
-    [parameters setObject:phone forKey:@"phone"];
+    if (phone) {
+        [parameters setObject:phone forKey:@"phone"];
+    }
     [parameters setObject:[NSNumber numberWithInteger:page] forKey:@"page"];
     parameters = [self paramWithDictionary:parameters];
     [_HTTPEngine GET:klogicPathOfSearch parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
