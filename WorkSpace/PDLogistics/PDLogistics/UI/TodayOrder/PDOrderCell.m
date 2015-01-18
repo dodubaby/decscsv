@@ -122,6 +122,8 @@
         startsendbtn.layer.masksToBounds = YES;
         UIImage *image1 = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:startsendbtn.size];
         [startsendbtn setBackgroundImage:image1 forState:UIControlStateNormal];
+        UIImage *selectedimage = [UIImage imageWithColor:[UIColor colorWithHexString:kAppTitleColor] size:startsendbtn.size];
+        [startsendbtn setBackgroundImage:selectedimage forState:UIControlStateSelected];
         [self addSubview:startsendbtn];
         
         finishsendbtn = [[UIButton alloc] initWithFrame:CGRectMake(startsendbtn.right+kCellLeftGap, totallab.bottom+kCellLeftGap, (kAppWidth-8*kCellLeftGap)/2, 40)];
@@ -139,6 +141,8 @@
         finishsendbtn.layer.masksToBounds = YES;
         UIImage *image2 = [UIImage imageWithColor:[UIColor colorWithHexString:kAppRedColor] size:finishsendbtn.size];
         [finishsendbtn setBackgroundImage:image2 forState:UIControlStateNormal];
+        UIImage *fselectedimage = [UIImage imageWithColor:[UIColor colorWithHexString:kAppTitleColor] size:finishsendbtn.size];
+        [finishsendbtn setBackgroundImage:fselectedimage forState:UIControlStateSelected];
         [self addSubview:finishsendbtn];
         
         bgborderimg=[[UIImageView alloc] initWithFrame:CGRectMake(kCellLeftGap, 11, kAppWidth-kCellLeftGap*2, finishsendbtn.bottom+kCellLeftGap)];
@@ -174,20 +178,23 @@
         newmarkimg.hidden=YES;
         bgborderimg.frame=CGRectMake(kCellLeftGap, 11, kAppWidth-kCellLeftGap*2, 212+kCellLeftGap);
     }
-    if([data.is_finish integerValue]==1){
-        startsendbtn.userInteractionEnabled=NO;
-        [startsendbtn setTitle:@"已配送" forState:UIControlStateNormal];
-    }else{
+    if([data.status integerValue]==1){
         startsendbtn.userInteractionEnabled=YES;
-        [startsendbtn setTitle:@"开始配送" forState:UIControlStateNormal];
-    }
-    if([data.is_confirm integerValue]==1){
-        finishsendbtn.userInteractionEnabled=NO;
-        [finishsendbtn setTitle:@"完成" forState:UIControlStateNormal];
-    }else{
+        startsendbtn.selected=NO;
         finishsendbtn.userInteractionEnabled=YES;
-        [finishsendbtn setTitle:@"配送完成" forState:UIControlStateNormal];
+        finishsendbtn.selected=NO;
+    }else if([data.status integerValue]==2){
+        startsendbtn.userInteractionEnabled=NO;
+        startsendbtn.selected=YES;
+        finishsendbtn.userInteractionEnabled=YES;
+        finishsendbtn.selected=NO;
+    }else if([data.status integerValue]==3){
+        startsendbtn.userInteractionEnabled=NO;
+        startsendbtn.selected=YES;
+        finishsendbtn.userInteractionEnabled=NO;
+        finishsendbtn.selected=YES;
     }
+    
     //[self showDebugRect];
 }
 

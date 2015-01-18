@@ -24,16 +24,9 @@
 		6D46ED841A6B5CC0004DBD7E /* 发送.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46ED741A6B5CC0004DBD7E /* 发送.png */; };
 		6D46ED851A6B5CC0004DBD7E /* st_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46ED751A6B5CC0004DBD7E /* st_refresh@2x.png */; };
 		6D46EE651A6B5D4A004DBD7E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE641A6B5D4A004DBD7E /* LaunchScreen.xib */; };
-		6D46EE711A6B609D004DBD7E /* 29.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE671A6B609D004DBD7E /* 29.png */; };
-		6D46EE721A6B609D004DBD7E /* 45.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE681A6B609D004DBD7E /* 45.png */; };
-		6D46EE731A6B609D004DBD7E /* 50.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE691A6B609D004DBD7E /* 50.png */; };
-		6D46EE741A6B609D004DBD7E /* 57.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6A1A6B609D004DBD7E /* 57.png */; };
-		6D46EE751A6B609D004DBD7E /* 58.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6B1A6B609D004DBD7E /* 58.png */; };
-		6D46EE761A6B609D004DBD7E /* 72.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6C1A6B609D004DBD7E /* 72.png */; };
-		6D46EE771A6B609D004DBD7E /* 96.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6D1A6B609D004DBD7E /* 96.png */; };
-		6D46EE781A6B609D004DBD7E /* 114.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6E1A6B609D004DBD7E /* 114.png */; };
-		6D46EE791A6B609D004DBD7E /* 120.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6F1A6B609D004DBD7E /* 120.png */; };
-		6D46EE7A1A6B609D004DBD7E /* 256.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE701A6B609D004DBD7E /* 256.png */; };
+		6D46EE741A6B609D004DBD7E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6A1A6B609D004DBD7E /* Icon.png */; };
+		6D46EE781A6B609D004DBD7E /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6E1A6B609D004DBD7E /* Icon@2x.png */; };
+		6D46EE791A6B609D004DBD7E /* Icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6D46EE6F1A6B609D004DBD7E /* Icon@3x.png */; };
 		6D46EF261A6B7624004DBD7E /* PDHTTPEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D46EE8C1A6B7624004DBD7E /* PDHTTPEngine.m */; };
 		6D46EF271A6B7624004DBD7E /* PDBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D46EE8F1A6B7624004DBD7E /* PDBaseModel.m */; };
 		6D46EF281A6B7624004DBD7E /* PDOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D46EE911A6B7624004DBD7E /* PDOrderModel.m */; };
@@ -132,16 +125,9 @@
 		6D46ED741A6B5CC0004DBD7E /* 发送.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "发送.png"; sourceTree = "<group>"; };
 		6D46ED751A6B5CC0004DBD7E /* st_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "st_refresh@2x.png"; sourceTree = "<group>"; };
 		6D46EE641A6B5D4A004DBD7E /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
-		6D46EE671A6B609D004DBD7E /* 29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 29.png; sourceTree = "<group>"; };
-		6D46EE681A6B609D004DBD7E /* 45.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 45.png; sourceTree = "<group>"; };
-		6D46EE691A6B609D004DBD7E /* 50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 50.png; sourceTree = "<group>"; };
-		6D46EE6A1A6B609D004DBD7E /* 57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 57.png; sourceTree = "<group>"; };
-		6D46EE6B1A6B609D004DBD7E /* 58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 58.png; sourceTree = "<group>"; };
-		6D46EE6C1A6B609D004DBD7E /* 72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 72.png; sourceTree = "<group>"; };
-		6D46EE6D1A6B609D004DBD7E /* 96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 96.png; sourceTree = "<group>"; };
-		6D46EE6E1A6B609D004DBD7E /* 114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 114.png; sourceTree = "<group>"; };
-		6D46EE6F1A6B609D004DBD7E /* 120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 120.png; sourceTree = "<group>"; };
-		6D46EE701A6B609D004DBD7E /* 256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 256.png; sourceTree = "<group>"; };
+		6D46EE6A1A6B609D004DBD7E /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		6D46EE6E1A6B609D004DBD7E /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		6D46EE6F1A6B609D004DBD7E /* Icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@3x.png"; sourceTree = "<group>"; };
 		6D46EE881A6B7624004DBD7E /* PDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDConfig.h; sourceTree = "<group>"; };
 		6D46EE8B1A6B7624004DBD7E /* PDHTTPEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDHTTPEngine.h; sourceTree = "<group>"; };
 		6D46EE8C1A6B7624004DBD7E /* PDHTTPEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDHTTPEngine.m; sourceTree = "<group>"; };
@@ -305,16 +291,9 @@
 		6D46EE661A6B6033004DBD7E /* Logo */ = {
 			isa = PBXGroup;
 			children = (
-				6D46EE671A6B609D004DBD7E /* 29.png */,
-				6D46EE681A6B609D004DBD7E /* 45.png */,
-				6D46EE691A6B609D004DBD7E /* 50.png */,
-				6D46EE6A1A6B609D004DBD7E /* 57.png */,
-				6D46EE6B1A6B609D004DBD7E /* 58.png */,
-				6D46EE6C1A6B609D004DBD7E /* 72.png */,
-				6D46EE6D1A6B609D004DBD7E /* 96.png */,
-				6D46EE6E1A6B609D004DBD7E /* 114.png */,
-				6D46EE6F1A6B609D004DBD7E /* 120.png */,
-				6D46EE701A6B609D004DBD7E /* 256.png */,
+				6D46EE6A1A6B609D004DBD7E /* Icon.png */,
+				6D46EE6E1A6B609D004DBD7E /* Icon@2x.png */,
+				6D46EE6F1A6B609D004DBD7E /* Icon@3x.png */,
 			);
 			name = Logo;
 			sourceTree = "<group>";
@@ -843,35 +822,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D46EE761A6B609D004DBD7E /* 72.png in Resources */,
-				6D46EE751A6B609D004DBD7E /* 58.png in Resources */,
-				6D46EE741A6B609D004DBD7E /* 57.png in Resources */,
-				6D46EE721A6B609D004DBD7E /* 45.png in Resources */,
+				6D46EE741A6B609D004DBD7E /* Icon.png in Resources */,
 				6D46ED7D1A6B5CC0004DBD7E /* 搜索1.png in Resources */,
 				6D46ED781A6B5CC0004DBD7E /* 订单.png in Resources */,
 				6D46ED821A6B5CC0004DBD7E /* nav@2x.png in Resources */,
 				6D46ED761A6B5CC0004DBD7E /* 新.png in Resources */,
 				6D46ED811A6B5CC0004DBD7E /* 提示点消息@2x.png in Resources */,
-				6D46EE731A6B609D004DBD7E /* 50.png in Resources */,
 				6D46ED771A6B5CC0004DBD7E /* 订单号背景.png in Resources */,
 				6D46ED831A6B5CC0004DBD7E /* Back@2x.png in Resources */,
-				6D46EE781A6B609D004DBD7E /* 114.png in Resources */,
+				6D46EE781A6B609D004DBD7E /* Icon@2x.png in Resources */,
 				6D46ED791A6B5CC0004DBD7E /* 订单1.png in Resources */,
-				6D46EE711A6B609D004DBD7E /* 29.png in Resources */,
 				6D46ED7F1A6B5CC0004DBD7E /* 右.png in Resources */,
 				6D46ED7A1A6B5CC0004DBD7E /* 设置.png in Resources */,
 				6D46EE651A6B5D4A004DBD7E /* LaunchScreen.xib in Resources */,
 				6D46ED7B1A6B5CC0004DBD7E /* 设置1.png in Resources */,
 				6D46ED651A6B5CA1004DBD7E /* neworderin05.m4a in Resources */,
-				6D46EE7A1A6B609D004DBD7E /* 256.png in Resources */,
 				6D46ED841A6B5CC0004DBD7E /* 发送.png in Resources */,
 				6DEB46781A5660D9002B2E84 /* 2.png in Resources */,
 				6D7F5E9A1A46B66300B634C7 /* Images.xcassets in Resources */,
 				6D46ED851A6B5CC0004DBD7E /* st_refresh@2x.png in Resources */,
 				6D46EF481A6B7624004DBD7E /* SVProgressHUD.bundle in Resources */,
-				6D46EE771A6B609D004DBD7E /* 96.png in Resources */,
 				6D46ED7E1A6B5CC0004DBD7E /* 左.png in Resources */,
-				6D46EE791A6B609D004DBD7E /* 120.png in Resources */,
+				6D46EE791A6B609D004DBD7E /* Icon@3x.png in Resources */,
 				6D46ED7C1A6B5CC0004DBD7E /* 搜索.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

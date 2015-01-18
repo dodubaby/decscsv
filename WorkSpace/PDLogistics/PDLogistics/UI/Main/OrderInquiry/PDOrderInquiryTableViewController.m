@@ -322,8 +322,11 @@
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
     [engine changeOrderStatusWithcourierid:courierid order_id:[order.order_id integerValue] type:1 success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
-        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alt show];
+        order.status=@"2";
+        NSIndexPath *indexpath=[self.tableView indexPathForCell:cell];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationFade];
+//        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alt show];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];
@@ -339,8 +342,11 @@
     PDHTTPEngine *engine=[[PDHTTPEngine alloc] init];
     [engine changeOrderStatusWithcourierid:courierid order_id:[order.order_id integerValue] type:2 success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"responseObject==%@",responseObject);
-        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alt show];
+        order.status=@"3";
+        NSIndexPath *indexpath=[self.tableView indexPathForCell:cell];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexpath] withRowAnimation:UITableViewRowAnimationFade];
+//        UIAlertView *alt=[[UIAlertView alloc] initWithTitle:responseObject[@"msg"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [alt show];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alt show];

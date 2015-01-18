@@ -28,5 +28,7 @@ typedef NS_ENUM(NSUInteger, OrderType) {
 @property(nonatomic,copy) NSString *order_id;
 @property(nonatomic,copy) NSString *phone;
 @property(nonatomic,copy) NSString *sum_price;
+@property(nonatomic,copy) NSString *status;//1确认订单,2中间物流配送,3终极物流配送
+
 
 @end
