@@ -36,7 +36,7 @@
     navimgview.image=[UIImage imageNamed:@"nav"];
     self.navigationItem.titleView=navimgview;
     
-    todayBtn = [[UIButton alloc] initWithFrame:CGRectMake(kGap, 64+kGap*2, kAppWidth-kGap*2, 100)];
+    todayBtn = [[UIButton alloc] initWithFrame:CGRectMake(kGap, 64+kGap, kAppWidth-kGap*2, 100)];
     todayBtn.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:todayBtn];
     todayBtn.layer.cornerRadius = 0;

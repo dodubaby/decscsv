@@ -186,7 +186,7 @@
         [receivebtn setTitle:@"接单" forState:UIControlStateNormal];
         
     }
-    if([data.is_finish integerValue]==1){
+    if([data.is_finish integerValue]==1||data.type==OrderTypeNormal){
         finishbtn.hidden=YES;
     }else{
         finishbtn.userInteractionEnabled=YES;

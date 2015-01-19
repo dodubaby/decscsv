@@ -67,7 +67,7 @@
     orderInquiryBtn = [[UIButton alloc] initWithFrame:CGRectMake(todayBtn.left, todayBtn.bottom+kGap, kAppWidth-kGap*2, 100)];*/
     
     
-    orderInquiryBtn = [[UIButton alloc] initWithFrame:CGRectMake(kGap, 64+kGap*2, kAppWidth-kGap*2, 100)];
+    orderInquiryBtn = [[UIButton alloc] initWithFrame:CGRectMake(kGap, 64+kGap, kAppWidth-kGap*2, 100)];
     orderInquiryBtn.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:orderInquiryBtn];
     orderInquiryBtn.layer.cornerRadius = 0;
