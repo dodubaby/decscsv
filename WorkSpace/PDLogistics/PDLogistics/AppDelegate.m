@@ -17,7 +17,6 @@
 
 @interface AppDelegate ()
 {
-    int badgeNumber;
 }
 @end
 
@@ -43,9 +42,20 @@
                                                    UIRemoteNotificationTypeAlert)
                                        categories:nil];
     [APService setupWithOption:launchOptions];
-    badgeNumber=0;
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
+    
     return YES;
 }
+- (void)networkDidReceiveMessage:(NSNotification *)notification {
+    NSDictionary * userInfo = [notification userInfo];
+    [APService handleRemoteNotification:userInfo];
+    NSString *content = [userInfo valueForKey:@"content"];
+    NSDictionary *extras = [userInfo valueForKey:@"extras"];
+    NSString *customizeField1 = [extras valueForKey:@"customizeField1"]; //自定义参数，key是自己定义的
+    NSLog(@"userInfo==%@",userInfo);
+}
+
 
 -(void)changetoLoginViewController
 {
@@ -82,13 +92,11 @@
     // instead of applicationWillTerminate: when the user quits.
     
     //[[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
-    badgeNumber=0;
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badgeNumber];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    badgeNumber=0;
-    [application setApplicationIconBadgeNumber:badgeNumber];
+    [application setApplicationIconBadgeNumber:0];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -137,7 +145,8 @@
     [APService handleRemoteNotification:userInfo];
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
     [self playsound];
-    badgeNumber++;
+    NSDictionary *aps=[userInfo objectForKey:@"aps"];
+    NSInteger badgeNumber=[[aps objectForKey:@"sound"] integerValue];
     [application setApplicationIconBadgeNumber:badgeNumber];
 }
 
@@ -148,7 +157,8 @@ fetchCompletionHandler:
     NSLog(@"收到通知:%@", [self logDic:userInfo]);
     completionHandler(UIBackgroundFetchResultNewData);
     [self playsound];
-    badgeNumber++;
+    NSDictionary *aps=[userInfo objectForKey:@"aps"];
+    NSInteger badgeNumber=[[aps objectForKey:@"sound"] integerValue];
     [application setApplicationIconBadgeNumber:badgeNumber];
 }
 
