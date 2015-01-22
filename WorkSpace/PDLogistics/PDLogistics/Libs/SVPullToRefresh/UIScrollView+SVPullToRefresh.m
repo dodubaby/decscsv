@@ -180,6 +180,10 @@ static char UIScrollViewPullToRefreshView;
         self.state = SVPullToRefreshStateStopped;
         self.showsDateLabel = NO;
         
+//        self.titles = [NSMutableArray arrayWithObjects:NSLocalizedString(@"Pull to refresh...",),
+//                             NSLocalizedString(@"Release to refresh...",),
+//                             NSLocalizedString(@"Loading...",),
+//                                nil];
         self.titles = [NSMutableArray arrayWithObjects:
                        NSLocalizedString(@"            下拉刷新",),
                        NSLocalizedString(@"     松开手指开始加载",),

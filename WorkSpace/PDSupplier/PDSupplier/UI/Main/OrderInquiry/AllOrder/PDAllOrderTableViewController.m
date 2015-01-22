@@ -151,6 +151,7 @@
                 [weakSelf.list addObject:model];
             }
             [weakSelf.tableView reloadData];
+            
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [weakSelf.tableView.pullToRefreshView stopAnimating];
             UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -166,14 +167,24 @@
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         NSString *kitchenid=[defaults objectForKey:@"kitchenid"];
         [engine allOrderWithKitchenid:kitchenid start_date:weakSelf.start_date end_date:weakSelf.end_date page:weakSelf.curpage success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            [weakSelf.tableView.infiniteScrollingView stopAnimating];
-            NSArray *arr=(NSArray*)responseObject;
-            for (int i=0; i<arr.count; i++) {
-                PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
-                [weakSelf.list addObject:model];
-            }
-            [weakSelf.tableView reloadData];
             
+            NSArray *arr=(NSArray*)responseObject;
+            if (arr.count) {
+                for (int i=0; i<arr.count; i++) {
+                    PDOrderModel *model = [PDOrderModel objectWithJoy:[arr objectAtIndex:i]];
+                    [weakSelf.list addObject:model];
+                }
+                [weakSelf.tableView reloadData];
+            }else if(weakSelf.list.count>0){
+                UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kAppWidth, 40)];
+                label.backgroundColor = [UIColor whiteColor];
+                label.font = [UIFont systemFontOfSize:15];
+                label.textColor = [UIColor colorWithHexString:@"#666666"];
+                label.textAlignment = NSTextAlignmentCenter;
+                label.text = @"没有更多的订单";
+                [weakSelf.tableView.infiniteScrollingView setCustomView:label forState:SVInfiniteScrollingStateStopped];
+            }
+            [weakSelf.tableView.infiniteScrollingView stopAnimating];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             [weakSelf.tableView.infiniteScrollingView stopAnimating];
             UIAlertView *alt=[[UIAlertView alloc] initWithTitle:[error.userInfo objectForKey:@"Message"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];

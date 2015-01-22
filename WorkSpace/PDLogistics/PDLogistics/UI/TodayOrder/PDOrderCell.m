@@ -153,6 +153,7 @@
         bgborderimg.layer.borderColor = [[UIColor colorWithHexString:kAppLineColor] CGColor];
         [self addSubview:bgborderimg];
         [self sendSubviewToBack:bgborderimg];
+        self.selectionStyle=UITableViewCellSelectionStyleNone;
     }
     
     return self;

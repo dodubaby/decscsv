@@ -1105,6 +1105,7 @@
 		6D7F5E7C1A46B65500B634C7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Distribution: zhen ming (3467K75D6X)";
 				INFOPLIST_FILE = PDSupplier/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

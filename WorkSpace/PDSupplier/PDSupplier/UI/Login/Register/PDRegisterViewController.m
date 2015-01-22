@@ -124,6 +124,7 @@
     UIView *view3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTextFieldLeft, passwordtfd.frame.size.height)];
     passwordtfd.leftView = view3;
     passwordtfd.leftViewMode = UITextFieldViewModeAlways;
+    passwordtfd.secureTextEntry=YES;
     [self.view addSubview:passwordtfd];
     
     submitbtn = [[UIButton alloc] initWithFrame:CGRectMake(kGap, passwordtfd.bottom+kGap, kAppWidth-kGap*2, 40)];

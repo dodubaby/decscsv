@@ -57,6 +57,7 @@
     [todayBtn addSubview:todayImg];
     
     tishibtn=[[UIButton alloc] initWithFrame:CGRectMake(115, 75.0f/2-5, 20, 20)];
+    [tishibtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
     tishibtn.userInteractionEnabled=NO;
     [tishibtn setBackgroundImage:[UIImage imageNamed:@"提示点消息"] forState:0];
     tishibtn.titleLabel.textColor=[UIColor whiteColor];

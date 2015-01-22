@@ -66,6 +66,7 @@
     UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kTextFieldLeft, passwordtfd.frame.size.height)];
     passwordtfd.leftView = view1;
     passwordtfd.leftViewMode = UITextFieldViewModeAlways;
+    passwordtfd.secureTextEntry=YES;
     [self.view addSubview:passwordtfd];
 
 
@@ -133,7 +134,7 @@
         PDRegisterViewController *controller=[[PDRegisterViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     }];
-    usernametfd.text=@"15611350211";
+    usernametfd.text=@"18601212008";
     passwordtfd.text=@"1";
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
