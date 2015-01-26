@@ -29,7 +29,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    self.mode = MMReachabilityModeOverlay;
+    self.visibilityTime = 3.0;
     logintitle = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, kAppWidth, 44)];
     logintitle.text=@"登录";
     logintitle.font=[UIFont systemFontOfSize:kAppFontSize];
@@ -95,7 +96,7 @@
                 NSLog(@"responseObject==%@",responseObject);
                 NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
                 [defaults setObject:[responseObject objectForKey:@"courierid"] forKey:@"courierid"];
-                //[defaults setObject:[responseObject objectForKey:@"today_order"] forKey:@"today_order"];
+                //[defaults setObject:[responseObject objectForKey:@"today_new_order"] forKey:@"today_new_order"];
                 [defaults synchronize];
                 AppDelegate *app=[[UIApplication sharedApplication] delegate];
                 [app changetoMainViewController];

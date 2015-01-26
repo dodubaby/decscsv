@@ -154,12 +154,22 @@
 fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
-    NSLog(@"收到通知:%@", [self logDic:userInfo]);
+    NSLog(@"收到通知:%@", userInfo);
     completionHandler(UIBackgroundFetchResultNewData);
     [self playsound];
     NSDictionary *aps=[userInfo objectForKey:@"aps"];
     NSInteger badgeNumber=[[aps objectForKey:@"sound"] integerValue];
     [application setApplicationIconBadgeNumber:badgeNumber];
+    NSString *alert=[aps objectForKey:@"alert"];
+    NSString *alertdicstr=[NSString stringWithFormat:@"{%@}",alert];
+    NSDictionary *orderdic=[NSJSONSerialization JSONObjectWithData:[alertdicstr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+    NSLog(@"orderdic==%@",orderdic);
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSInteger ordernum=[[defaults objectForKey:@"today_new_order"] integerValue];
+    ordernum++;
+    [defaults setObject:[NSNumber numberWithInt:ordernum] forKey:@"today_new_order"];
+    [defaults synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"recieveNeworder" object:orderdic];
 }
 
 -(void)playsound

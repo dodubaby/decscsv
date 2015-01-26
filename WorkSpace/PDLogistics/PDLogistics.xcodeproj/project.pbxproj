@@ -105,6 +105,8 @@
 		6DBD88C31A6D500D00438897 /* PushConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DBD88C21A6D500D00438897 /* PushConfig.plist */; };
 		6DBD88D11A6D644600438897 /* libPushSDK-1.8.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DBD88D01A6D644600438897 /* libPushSDK-1.8.2.a */; };
 		6DBD88D31A6D64EA00438897 /* neworderin05.wav in Resources */ = {isa = PBXBuildFile; fileRef = 6DBD88D21A6D64EA00438897 /* neworderin05.wav */; };
+		6DE698061A752E13004AF9F7 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE698051A752E13004AF9F7 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6DE698091A753E6D004AF9F7 /* UILable+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DE698081A753E6D004AF9F7 /* UILable+Utils.m */; };
 		6DEB46781A5660D9002B2E84 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 6DEB46771A5660D9002B2E84 /* 2.png */; };
 /* End PBXBuildFile section */
 
@@ -290,6 +292,10 @@
 		6DBD88CF1A6D644600438897 /* APService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APService.h; sourceTree = "<group>"; };
 		6DBD88D01A6D644600438897 /* libPushSDK-1.8.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libPushSDK-1.8.2.a"; sourceTree = "<group>"; };
 		6DBD88D21A6D64EA00438897 /* neworderin05.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = neworderin05.wav; sourceTree = "<group>"; };
+		6DE698041A752E13004AF9F7 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		6DE698051A752E13004AF9F7 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		6DE698071A753E6D004AF9F7 /* UILable+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILable+Utils.h"; sourceTree = "<group>"; };
+		6DE698081A753E6D004AF9F7 /* UILable+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILable+Utils.m"; sourceTree = "<group>"; };
 		6DEB46771A5660D9002B2E84 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -581,6 +587,8 @@
 				6D46EEF71A6B7624004DBD7E /* PDBaseTableViewController.m */,
 				6D46EEF81A6B7624004DBD7E /* PDBaseViewController.h */,
 				6D46EEF91A6B7624004DBD7E /* PDBaseViewController.m */,
+				6DE698041A752E13004AF9F7 /* Reachability.h */,
+				6DE698051A752E13004AF9F7 /* Reachability.m */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -684,6 +692,8 @@
 				6D46EF231A6B7624004DBD7E /* UIImage+Utils.m */,
 				6D46EF241A6B7624004DBD7E /* UIView+Utils.h */,
 				6D46EF251A6B7624004DBD7E /* UIView+Utils.m */,
+				6DE698071A753E6D004AF9F7 /* UILable+Utils.h */,
+				6DE698081A753E6D004AF9F7 /* UILable+Utils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -964,8 +974,10 @@
 				6D46EF4F1A6B7624004DBD7E /* UIView+convenience.m in Sources */,
 				6D46EF361A6B7624004DBD7E /* UIImageView+AFNetworking.m in Sources */,
 				6D46EF5B1A6B7624004DBD7E /* PDOrderCell.m in Sources */,
+				6DE698061A752E13004AF9F7 /* Reachability.m in Sources */,
 				6D46EF431A6B7624004DBD7E /* MMDrawerController.m in Sources */,
 				6D46EF261A6B7624004DBD7E /* PDHTTPEngine.m in Sources */,
+				6DE698091A753E6D004AF9F7 /* UILable+Utils.m in Sources */,
 				6D46EF5C1A6B7624004DBD7E /* PDTodayOrderTableViewController.m in Sources */,
 				6D46EF341A6B7624004DBD7E /* UIAlertView+AFNetworking.m in Sources */,
 				6D46EF2A1A6B7624004DBD7E /* AFHTTPRequestOperationManager.m in Sources */,

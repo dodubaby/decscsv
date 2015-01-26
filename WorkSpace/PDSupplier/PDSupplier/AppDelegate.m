@@ -44,15 +44,11 @@
     [APService setupWithOption:launchOptions];
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
     [defaultCenter addObserver:self selector:@selector(networkDidReceiveMessage:) name:kJPFNetworkDidReceiveMessageNotification object:nil];
-    
     return YES;
 }
 - (void)networkDidReceiveMessage:(NSNotification *)notification {
     NSDictionary * userInfo = [notification userInfo];
     [APService handleRemoteNotification:userInfo];
-    NSString *content = [userInfo valueForKey:@"content"];
-    NSDictionary *extras = [userInfo valueForKey:@"extras"];
-    NSString *customizeField1 = [extras valueForKey:@"customizeField1"]; //自定义参数，key是自己定义的
     NSLog(@"userInfo==%@",userInfo);
 }
 
@@ -150,7 +146,7 @@ forRemoteNotification:(NSDictionary *)userInfo
 - (void)application:(UIApplication *)application
 didReceiveRemoteNotification:(NSDictionary *)userInfo {
     [APService handleRemoteNotification:userInfo];
-    NSLog(@"收到通知:%@", [self logDic:userInfo]);
+    NSLog(@"收到通知:%@", userInfo);
     [self playsound];
     NSDictionary *aps=[userInfo objectForKey:@"aps"];
     NSInteger badgeNumber=[[aps objectForKey:@"sound"] integerValue];
@@ -162,12 +158,22 @@ didReceiveRemoteNotification:(NSDictionary *)userInfo
 fetchCompletionHandler:
 (void (^)(UIBackgroundFetchResult))completionHandler {
     [APService handleRemoteNotification:userInfo];
-    NSLog(@"收到通知:%@", [self logDic:userInfo]);
     completionHandler(UIBackgroundFetchResultNewData);
     [self playsound];
+    NSLog(@"收到通知:%@", userInfo);
     NSDictionary *aps=[userInfo objectForKey:@"aps"];
     NSInteger badgeNumber=[[aps objectForKey:@"sound"] integerValue];
     [application setApplicationIconBadgeNumber:badgeNumber];
+    NSString *alert=[aps objectForKey:@"alert"];
+    NSString *alertdicstr=[NSString stringWithFormat:@"{%@}",alert];
+    NSDictionary *orderdic=[NSJSONSerialization JSONObjectWithData:[alertdicstr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableContainers error:nil];
+    NSLog(@"orderdic==%@",orderdic);
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSInteger ordernum=[[defaults objectForKey:@"today_new_order"] integerValue];
+    ordernum++;
+    [defaults setObject:[NSNumber numberWithInt:ordernum] forKey:@"today_new_order"];
+    [defaults synchronize];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"recieveNeworder" object:orderdic];
 }
 
 -(void)playsound
@@ -190,10 +196,8 @@ didReceiveLocalNotification:(UILocalNotification *)notification {
 
 // log NSSet with UTF8
 // if not ,log will be \Uxxx
-- (NSString *)logDic:(NSDictionary *)dic {
-    if (![dic count]) {
-        return nil;
-    }
+- (NSDictionary *)logDic:(NSDictionary *)dic {
+
     NSString *tempStr1 =
     [[dic description] stringByReplacingOccurrencesOfString:@"\\u"
                                                  withString:@"\\U"];

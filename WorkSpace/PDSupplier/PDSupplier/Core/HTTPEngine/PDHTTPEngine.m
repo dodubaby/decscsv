@@ -74,8 +74,8 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //
         NSLog(@"%@",error);
-        
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
 }
 -(void)registerWithphone:(NSString *)phone
@@ -97,7 +97,6 @@
         NSDictionary *result = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingMutableContainers error:nil];
         int code = [result[@"code"] intValue];
         NSString *msg = result[@"msg"];
-        id data = result[@"data"];
         if (code == 0) {
             success(operation,result);
         }else{
@@ -109,7 +108,8 @@
         
         NSLog(@"%@",error);
         
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
 }
 -(void)loginWithphone:(NSString *)phone
@@ -138,10 +138,9 @@
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //
-        
         NSLog(@"%@",error);
-        
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
     
     
@@ -177,7 +176,8 @@
         
         NSLog(@"%@",error);
         
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
 
 }
@@ -209,7 +209,8 @@
         
         NSLog(@"%@",error);
         
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
     
 }
@@ -239,7 +240,8 @@
         
         NSLog(@"%@",error);
         
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
     
 }
@@ -269,7 +271,8 @@
         
         NSLog(@"%@",error);
         
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
     
 }
@@ -304,7 +307,8 @@
         
         NSLog(@"%@",error);
         
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
     
 }
@@ -344,7 +348,8 @@
         
         NSLog(@"%@",error);
         
-        failure(operation,error);
+        NSError *err = [NSError errorWithDomain:kHttpHost code:error.code userInfo:@{@"Message":@"没有网络"}];
+        failure(operation,err);
     }];
     
 }

@@ -28,9 +28,19 @@
 @end
 
 @implementation PDMainViewController
-
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+-(void)recieveNeworder:(NSNotification*)notification
+{
+    NSLog(@"notification==%@",notification);
+    [self viewWillAppear:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.mode = MMReachabilityModeOverlay;
+    self.visibilityTime = 3.0;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recieveNeworder:) name:@"recieveNeworder" object:nil];
     // Do any additional setup after loading the view.
     UIImageView *navimgview=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     navimgview.image=[UIImage imageNamed:@"nav"];
@@ -51,6 +61,9 @@
         [self resetselectedBtn:todayBtn];
         PDTodayOrderTableViewController *vc=[[PDTodayOrderTableViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:[NSNumber numberWithInt:0] forKey:@"today_new_order"];
+        [defaults synchronize];
     }];
     todayImg=[[UIImageView alloc] initWithFrame:CGRectMake(100, 75.0f/2, 25, 25)];
     todayImg.image=[UIImage imageNamed:@"订单"];
@@ -107,6 +120,8 @@
     [settingBtn addSubview:setImg];
     buttons=[[NSMutableArray alloc] initWithObjects:todayBtn,orderInquiryBtn,settingBtn, nil];
 }
+
+
 -(void)resetselectedBtn:(UIButton*)button
 {
     for (UIButton *btn in buttons) {
@@ -137,8 +152,8 @@
 {
     [super viewWillAppear:animated];
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSNumber *today_order=[defaults objectForKey:@"today_order"];
-    int number=[today_order intValue];
+    NSNumber *today_new_order=[defaults objectForKey:@"today_new_order"];
+    int number=[today_new_order intValue];
     if (number>0) {
         tishibtn.hidden=NO;
     }else{

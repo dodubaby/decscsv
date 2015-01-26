@@ -17,6 +17,7 @@
 #import "NSString+Utils.h"
 #import "UIImage+Utils.h"
 #import "UIDevice+Utitls.h"
+#import "UILable+Utils.h"
 #import "AppDelegate.h"
 
 // screen width

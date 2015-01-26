@@ -21,10 +21,18 @@
 @end
 
 @implementation PDOrderInquiryTableViewController
-
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+-(void)recieveNeworder:(NSNotification*)notification
+{
+    NSLog(@"notification==%@",notification);
+    [self.tableView triggerPullToRefresh];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recieveNeworder:) name:@"recieveNeworder" object:nil];
     _list=[[NSMutableArray alloc] init];
 
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];

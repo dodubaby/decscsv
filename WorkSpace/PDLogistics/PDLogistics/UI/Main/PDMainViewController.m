@@ -28,10 +28,20 @@
 @end
 
 @implementation PDMainViewController
-
+-(void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+-(void)recieveNeworder:(NSNotification*)notification
+{
+    NSLog(@"notification==%@",notification);
+    [self viewWillAppear:YES];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recieveNeworder:) name:@"recieveNeworder" object:nil];
+    self.mode = MMReachabilityModeOverlay;
+    self.visibilityTime = 3.0;
     UIImageView *navimgview=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     navimgview.image=[UIImage imageNamed:@"nav"];
     self.navigationItem.titleView=navimgview;
@@ -55,15 +65,6 @@
     todayImg=[[UIImageView alloc] initWithFrame:CGRectMake(100, 75.0f/2, 25, 25)];
     todayImg.image=[UIImage imageNamed:@"订单"];
     [todayBtn addSubview:todayImg];
-    
-    tishibtn=[[UIButton alloc] initWithFrame:CGRectMake(115, 75.0f/2-5, 20, 20)];
-    tishibtn.userInteractionEnabled=NO;
-    [tishibtn setBackgroundImage:[UIImage imageNamed:@"提示点消息"] forState:0];
-    tishibtn.titleLabel.textColor=[UIColor whiteColor];
-    [todayBtn addSubview:tishibtn];
-    
-    
-    
     orderInquiryBtn = [[UIButton alloc] initWithFrame:CGRectMake(todayBtn.left, todayBtn.bottom+kGap, kAppWidth-kGap*2, 100)];*/
     
     
@@ -82,11 +83,20 @@
         [self resetselectedBtn:orderInquiryBtn];
         PDOrderInquiryTableViewController *vc=[[PDOrderInquiryTableViewController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        [defaults setObject:[NSNumber numberWithInt:0] forKey:@"today_new_order"];
+        [defaults synchronize];
     }];
     searchImg=[[UIImageView alloc] initWithFrame:CGRectMake(100, 75.0f/2, 25, 25)];
     searchImg.image=[UIImage imageNamed:@"搜索"];
     [orderInquiryBtn addSubview:searchImg];
     
+    tishibtn=[[UIButton alloc] initWithFrame:CGRectMake(115, 75.0f/2-5, 20, 20)];
+    [tishibtn.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    tishibtn.userInteractionEnabled=NO;
+    [tishibtn setBackgroundImage:[UIImage imageNamed:@"提示点消息"] forState:0];
+    tishibtn.titleLabel.textColor=[UIColor whiteColor];
+    [orderInquiryBtn addSubview:tishibtn];
     
     settingBtn = [[UIButton alloc] initWithFrame:CGRectMake(kGap, kAppHeight-50-kGap, kAppWidth-kGap*2, 50)];
     settingBtn.backgroundColor=[UIColor whiteColor];
@@ -139,8 +149,8 @@
 {
     [super viewWillAppear:animated];
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSNumber *today_order=[defaults objectForKey:@"today_order"];
-    int number=[today_order intValue];
+    NSNumber *today_new_order=[defaults objectForKey:@"today_new_order"];
+    int number=[today_new_order intValue];
     if (number>0) {
         tishibtn.hidden=NO;
     }else{
