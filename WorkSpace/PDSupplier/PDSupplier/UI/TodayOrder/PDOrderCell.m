@@ -196,6 +196,8 @@
     }else{
         newmarkimg.hidden=YES;
     }
+//
+    newmarkimg.hidden=YES;
     if ([data.is_confirm integerValue]==1) {
         receivebtn.userInteractionEnabled=NO;
         [receivebtn setTitle:@"已接单" forState:UIControlStateNormal];

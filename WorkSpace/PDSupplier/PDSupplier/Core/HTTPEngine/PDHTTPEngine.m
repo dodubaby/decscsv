@@ -68,6 +68,7 @@
         if (code == 0) {
             success(operation,data);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -100,6 +101,7 @@
         if (code == 0) {
             success(operation,result);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -133,6 +135,7 @@
         if (code == 0) {
             success(operation,data);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -167,6 +170,7 @@
         if (code == 0) {
             success(operation,data);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -200,6 +204,7 @@
         if (code == 0) {
             success(operation,result);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -231,6 +236,7 @@
         if (code == 0) {
             success(operation,result);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -262,6 +268,7 @@
         if (code == 0) {
             success(operation,result);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -298,6 +305,7 @@
         if (code == 0) {
             success(operation,data);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -339,6 +347,7 @@
         if (code == 0) {
             success(operation,data);
         }else{
+            [self tokenExpireWithCode:code];
             NSError *err = [NSError errorWithDomain:kHttpHost code:code userInfo:@{@"Message":msg}];
             failure(operation,err);
         }
@@ -353,5 +362,16 @@
     }];
     
 }
-
+-(void)tokenExpireWithCode:(long)code{
+    if (code == 202) { // 登录失效
+        // 清除数据
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                                        message:@" 登录失效,请重新登录"
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"确定", nil];
+        [alert show];
+        return;
+    }
+}
 @end

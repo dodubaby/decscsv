@@ -135,8 +135,8 @@
         PDRegisterViewController *controller=[[PDRegisterViewController alloc] init];
         [self.navigationController pushViewController:controller animated:YES];
     }];
-    usernametfd.text=@"18601212008";
-    passwordtfd.text=@"1";
+//    usernametfd.text=@"18601212008";
+//    passwordtfd.text=@"1";
 }
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
