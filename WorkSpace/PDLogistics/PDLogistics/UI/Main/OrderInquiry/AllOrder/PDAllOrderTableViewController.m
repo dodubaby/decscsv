@@ -127,6 +127,7 @@
         }
         if (!_iPCalendarControl.superview) {
             [keywindow addSubview:_iPCalendarControl];
+            [keywindow bringSubviewToFront:footer];
             [(VRGCalendarView *)[_iPCalendarControl viewWithTag:100] reset];
         }
     }];

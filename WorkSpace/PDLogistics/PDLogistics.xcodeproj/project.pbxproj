@@ -1125,6 +1125,7 @@
 					/Users/zdf/Desktop/Sample/do/shangjia/decscsv/WorkSpace/PDSupplier/PDSupplier/Libs/JPush,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "951a14c1-363c-4050-b807-68ac0c195f7f";
 			};
 			name = Release;
 		};

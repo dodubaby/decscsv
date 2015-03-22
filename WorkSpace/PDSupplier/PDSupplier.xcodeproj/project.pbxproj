@@ -1129,6 +1129,7 @@
 					"$(PROJECT_DIR)/PDSupplier/Libs/JPush",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "478d3f3c-4d76-4975-9234-71388fe744c8";
 			};
 			name = Release;
 		};

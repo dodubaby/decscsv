@@ -24,6 +24,7 @@
 
 -(void)setupUI{
 
+    self.view.backgroundColor=[UIColor whiteColor];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [UIColor clearColor];
     button.frame = CGRectMake(0, 0, 26, 40);
